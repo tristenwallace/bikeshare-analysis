@@ -3,15 +3,6 @@ import pandas as pd
 import numpy as np
 import re
 
-#Features Needed:
-    
-    #STAT Output:
-    #Popular times of travel (most common month, day, week)
-    #Popular stations (start, stop, most common route)
-    #Trip Duration (total travel time, avg. travel time)
-    #User Info (user type count, genser count, birth stats)
-    
-    #Rerun program if user wants
 
 city_data = {'chicago': 'data/chicago.csv',
             'nyc': 'data/new_york_city.csv',
@@ -207,12 +198,15 @@ def user_stats(df, city):
 
 
 if __name__ == "__main__":
-    city, month, day = get_filters()
-    df = load_data(city, month, day)
-    
-    time_stats(df, month, day)
-    station_stats(df)
-    trip_stats(df)
-    user_stats(df, city)
-    
-    #print(df['Birth Year'])
+    while True:
+        city, month, day = get_filters()
+        df = load_data(city, month, day)
+        
+        time_stats(df, month, day)
+        station_stats(df)
+        trip_stats(df)
+        user_stats(df, city)
+        
+        restart = input("Would you like to restart: y/n?")
+        if restart.lower() != 'y':
+            break
