@@ -1,6 +1,7 @@
 import time
 import pandas as pd
 import numpy as np
+import re
 
 #Features Needed:
     #user input (city, month/day filter)
@@ -18,8 +19,48 @@ city_data = {'chicago': 'chicago.csv',
             'washington': 'washington.csv'}
 
 def get_filters():
-    #TO DO
-    return
+    #Asks user to specify a city, month, and day to analyze.
+    city = ''
+    month = ''
+    day = ''
+    
+    #Ask for city
+    while city == '':
+        try:
+            city = input("Which city do you want to analyze: Chicago, NYC, or Washington?\n").lower()
+            if not re.match('chicago|nyc|washington', city):
+                city = ''
+                raise ValueError("Invalid input. Please enter a valid city.\n")
+            else:
+                print("We'll provide data for {}\n".format(city.upper())) 
+        except ValueError:
+            print("Invalid input. Please enter a valid city.\n")
+    
+    #Ask for month
+    while month == '':
+        try:
+            month = input("Which month do you want to filter by: jan feb mar apr may jun?\n").lower()
+            if not re.match('jan|feb|mar|apr|may|jun', month):
+                month = ''
+                raise ValueError("Invalid input. Please enter a valid month: jan feb mar apr may jun\n")
+            else:
+                print("We'll filter by {}\n".format(month.upper())) 
+        except ValueError:
+            print("Invalid input. Please enter a valid month: jan feb mar apr may jun\n")
+    
+    #Ask for day
+    while day == '':
+        try:
+            day = input("Which day of the week do you want to filter by: m t w th f s su?\n").lower()
+            if not re.match('m|t|w|th|f|s|su', day):
+                day = ''
+                raise ValueError("Invalid input. Please enter a valid month: m t w th f s su\n")
+            else:
+                print("We'll filter by {}\n".format(day.upper())) 
+        except ValueError:
+            print("Invalid input. Please enter a valid month: m t w th f s su\n")
+    
+    return city, month, day
 
 def load_data():
     #TO DO
@@ -42,5 +83,5 @@ def user_stats():
     return
 
 if __name__ == "__main__":
-    #TO DO
-    print('nothing done yet')
+    city, month, day = get_filters()
+    print('city:{} month:{} day:{}'.format(city, month, day))
