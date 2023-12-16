@@ -4,7 +4,6 @@ import numpy as np
 import re
 
 #Features Needed:
-    #user input (city, month/day filter)
     
     #STAT Output:
     #Popular times of travel (most common month, day, week)
@@ -68,6 +67,7 @@ def load_data(city, month, day):
     mask = pd.Series()
     mask2 = pd.Series()
     
+    #create mask based on month filter
     if month == 'jan':
         mask = (df['Start Time'] > '2017-01-01') & (df['Start Time'] < '2017-02-01')
     elif month == 'feb':
@@ -83,6 +83,7 @@ def load_data(city, month, day):
     elif month == 'all':
         mask = (df['Start Time'] > '2017-01-01') & (df['Start Time'] < '2017-07-01')
     
+    #create mask based on day filter
     if day == 'm':
         mask2 = (df['Start Time'].dt.dayofweek == 0)
     elif day == 't':
@@ -100,12 +101,31 @@ def load_data(city, month, day):
     elif day == 'all':
         mask2 = (df['Start Time'].dt.dayofweek < 7)
     
-        
+    #return filtered dataframe using masks
     return df.loc[mask].loc[mask2]
 
-def time_stats():
-    #TO DO
-    return
+def time_stats(df, month, day):
+    #Displays statistics on the most frequent times of travel.
+    
+    print('\nCalculating The Most Frequent Times of Travel...\n')
+    start_time = time.time()
+    
+    # display the most common month
+    if month == 'all':
+        top_month = df['Start Time'].dt.month.value_counts().idxmax()
+        print("The most common month is {}\n".format(top_month))
+    
+    # display the most common day of week
+    if day == 'all':
+        top_dow = df['Start Time'].dt.dayofweek.value_counts().idxmax()
+        print("The most common day of week is {}\n".format(top_dow))
+    
+    # display the most common start hour
+        top_hour = df['Start Time'].dt.hour.value_counts().idxmax()
+        print("The most common start hour is {}\n".format(top_hour))
+
+    print("\nThis took %s seconds." % (time.time() - start_time))
+
 
 def station_stats():
     #TO DO
@@ -120,7 +140,9 @@ def user_stats():
     return
 
 if __name__ == "__main__":
-    #city, month, day = get_filters()
-    #df = load_data(city, month, day)
-    df = load_data(get_filters())
+    city, month, day = get_filters()
+    df = load_data(city, month, day)
+    
+    time_stats(df, month, day)
+    
     print(df['Start Time'].dt.dayofweek)
