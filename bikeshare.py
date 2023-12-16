@@ -129,8 +129,25 @@ def time_stats(df, month, day):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-def station_stats():
-    #TO DO
+def station_stats(df):
+    #Displays statistics on the most popular stations and trip.
+    
+    print('\nCalculating The Most Popular Stations and Trip...\n')
+    start_time = time.time()
+    
+    # display most commonly used start station
+    s1 = df['Start Station'].value_counts().idxmax()
+    print("Start Station: {}\n".format(s1))
+    
+    # display most commonly used end station
+    s2 = df['End Station'].value_counts().idxmax()
+    print("End station: {}\n".format(s2))
+
+    # display most frequent combination of start station and end station trip
+    df['Trip'] = df['Start Station'] + ' TO ' + df['End Station']
+    s3 = df['Trip'].value_counts().idxmax()
+    print("Trip: {}\n".format(s3))
+    
     print('-'*40)
 
 def trip_stats():
@@ -145,6 +162,5 @@ if __name__ == "__main__":
     city, month, day = get_filters()
     df = load_data(city, month, day)
     
-    time_stats(df, month, day)
-    
-    print(df['Start Time'].dt.dayofweek)
+    #time_stats(df, month, day)
+    station_stats(df)
