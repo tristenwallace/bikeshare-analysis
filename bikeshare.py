@@ -182,6 +182,13 @@ def user_stats(df, city):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+def display_data(df):
+    view_data = input('\nWould you like to view 5 rows of individual trip data? yes or no\n').lower()
+    start_loc = 0
+    while view_data == 'yes':
+        print(df.iloc[start_loc:start_loc+5,:])
+        start_loc += 5
+        view_data = input('\nWould you like to continue with 5 more? yes or no\n').lower()
 
 if __name__ == "__main__":
     while True:
@@ -192,6 +199,7 @@ if __name__ == "__main__":
         station_stats(df)
         trip_stats(df)
         user_stats(df, city)
+        display_data(df)
         
         restart = input("Would you like to restart: y/n?")
         if restart.lower() != 'y':
