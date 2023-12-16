@@ -39,14 +39,14 @@ def get_filters():
     #Ask for month
     while month == '':
         try:
-            month = input("Which month do you want to filter by: jan feb mar apr may jun?\n").lower()
-            if not re.match('jan|feb|mar|apr|may|jun', month):
+            month = input("Which month do you want to filter by (or all): jan feb mar apr may jun all?\n").lower()
+            if not re.match('jan|feb|mar|apr|may|jun|all', month):
                 month = ''
-                raise ValueError("Invalid input. Please enter a valid month: jan feb mar apr may jun\n")
+                raise ValueError("Invalid input. Please enter a valid month: jan feb mar apr may jun all\n")
             else:
                 print("We'll filter by {}\n".format(month.upper())) 
         except ValueError:
-            print("Invalid input. Please enter a valid month: jan feb mar apr may jun\n")
+            print("Invalid input. Please enter a valid month or all: jan feb mar apr may jun all\n")
     
     #Ask for day
     while day == '':
