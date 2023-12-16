@@ -177,8 +177,32 @@ def trip_stats(df):
     print('-'*40)
 
 
-def user_stats():
-    #TO DO
+def user_stats(df, city):
+    #Displays statistics on bikeshare users.
+    
+    print('\nCalculating User Stats...\n')
+    start_time = time.time()
+    
+    # Display counts of user types
+    print(df['User Type'].value_counts())
+
+    if city != 'washington':
+        
+        # Display counts of gender
+        print('\n')    
+        print(df['Gender'].value_counts())
+
+        # Display earliest, most recent, and most common year of birth
+        low_year = int(df['Birth Year'].min())
+        recent_year = int(df['Birth Year'].max())
+        common_year = int(df['Birth Year'].value_counts().idxmax())
+        print('\nEarliest Year: {}\n'.format(low_year))
+        print('Most Recent Year: {}\n'.format(recent_year))
+        print('Most Common Year: {}\n'.format(common_year))
+
+    
+    
+    print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
 
@@ -186,8 +210,9 @@ if __name__ == "__main__":
     city, month, day = get_filters()
     df = load_data(city, month, day)
     
-    #time_stats(df, month, day)
-    #station_stats(df)
+    time_stats(df, month, day)
+    station_stats(df)
     trip_stats(df)
+    user_stats(df, city)
     
-    #print(df.columns)
+    #print(df['Birth Year'])
