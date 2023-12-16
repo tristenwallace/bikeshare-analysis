@@ -59,6 +59,7 @@ def get_filters():
         except ValueError:
             print("Invalid input. Please enter a valid month (or all): m t w th f s su all\n")
     
+    print('-'*40)
     return city, month, day
 
 def load_data(city, month, day):
@@ -102,6 +103,7 @@ def load_data(city, month, day):
         mask2 = (df['Start Time'].dt.dayofweek < 7)
     
     #return filtered dataframe using masks
+    print('-'*40)
     return df.loc[mask].loc[mask2]
 
 def time_stats(df, month, day):
@@ -125,19 +127,19 @@ def time_stats(df, month, day):
         print("The most common start hour is {}\n".format(top_hour))
 
     print("\nThis took %s seconds." % (time.time() - start_time))
-
+    print('-'*40)
 
 def station_stats():
     #TO DO
-    return
+    print('-'*40)
 
 def trip_stats():
     #TO DO
-    return
+    print('-'*40)
 
 def user_stats():
     #TO DO
-    return
+    print('-'*40)
 
 if __name__ == "__main__":
     city, month, day = get_filters()
