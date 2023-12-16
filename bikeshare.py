@@ -51,14 +51,14 @@ def get_filters():
     #Ask for day
     while day == '':
         try:
-            day = input("Which day of the week do you want to filter by: m t w th f s su?\n").lower()
-            if not re.match('m|t|w|th|f|s|su', day):
+            day = input("Which day of the week do you want to filter by (or all): m t w th f s su all?\n").lower()
+            if not re.match('m|t|w|th|f|s|su|all', day):
                 day = ''
-                raise ValueError("Invalid input. Please enter a valid month: m t w th f s su\n")
+                raise ValueError("Invalid input. Please enter a valid month (or all): m t w th f s su all\n")
             else:
                 print("We'll filter by {}\n".format(day.upper())) 
         except ValueError:
-            print("Invalid input. Please enter a valid month: m t w th f s su\n")
+            print("Invalid input. Please enter a valid month (or all): m t w th f s su all\n")
     
     return city, month, day
 
