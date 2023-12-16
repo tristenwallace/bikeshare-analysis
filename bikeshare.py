@@ -17,6 +17,7 @@ city_data = {'chicago': 'data/chicago.csv',
             'nyc': 'data/new_york_city.csv',
             'washington': 'data/washington.csv'}
 
+
 def get_filters():
     #Asks user to specify a city, month, and day to analyze.
     city = ''
@@ -62,6 +63,7 @@ def get_filters():
     print('-'*40)
     return city, month, day
 
+
 def load_data(city, month, day):
     df = pd.read_csv(city_data[city], parse_dates=['Start Time', 'End Time'])
 
@@ -106,6 +108,7 @@ def load_data(city, month, day):
     print('-'*40)
     return df.loc[mask].loc[mask2]
 
+
 def time_stats(df, month, day):
     #Displays statistics on the most frequent times of travel.
     
@@ -129,6 +132,7 @@ def time_stats(df, month, day):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+
 def station_stats(df):
     #Displays statistics on the most popular stations and trip.
     
@@ -148,19 +152,42 @@ def station_stats(df):
     s3 = df['Trip'].value_counts().idxmax()
     print("Trip: {}\n".format(s3))
     
+    print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-def trip_stats():
-    #TO DO
+
+def trip_stats(df):
+    #Displays statistics on the total and average trip duration.
+    
+    print('\nCalculating Trip Duration...\n')
+    start_time = time.time()
+    
+    # display total travel time
+    total = df['Trip Duration'].sum()
+    total_hours = total/(60*60)
+    print("Total Travel Time: {} hours".format(total_hours))
+
+    # display mean travel time
+    average_time = df['Trip Duration'].mean()
+    average_time_min = average_time / 60
+    print("Mean Travel Time: {} minutes".format(average_time_min))
+
+    
+    print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
+
 
 def user_stats():
     #TO DO
     print('-'*40)
+
 
 if __name__ == "__main__":
     city, month, day = get_filters()
     df = load_data(city, month, day)
     
     #time_stats(df, month, day)
-    station_stats(df)
+    #station_stats(df)
+    trip_stats(df)
+    
+    #print(df.columns)
