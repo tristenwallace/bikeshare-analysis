@@ -11,6 +11,7 @@ Using Python, I explored data produced by bike share systems for three major cit
 ## Dependencies
 - `pandas`
 - `numpy`
+- I reccommend using Anaconda ([install instructions](https://docs.anaconda.com/free/anaconda/install/index.html)). Check for dependencies by running `conda list` in terminal.
 
 ## Installing
 - Fork the repo and pull to your local machine
