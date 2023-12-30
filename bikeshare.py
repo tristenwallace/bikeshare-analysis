@@ -11,7 +11,7 @@ city_data = {
 
 
 def get_filters():
-    # Asks user to specify a city, month, and day to analyze.
+    """Asks user to specify a city, month, and day to analyze."""
     time_filter = ""
     city = ""
     month = ""
@@ -75,6 +75,8 @@ def get_filters():
 
 
 def load_data(city, month, day):
+    """Loads csv data to dataframe, filtered by user inputs"""
+
     df = pd.read_csv(city_data[city], parse_dates=["Start Time", "End Time"])
 
     # Filter by month
@@ -94,7 +96,7 @@ def load_data(city, month, day):
 
 
 def time_stats(df, month, day):
-    # Displays statistics on the most frequent times of travel.
+    """Displays statistics on the most frequent times of travel."""
 
     print("\nCalculating The Most Frequent Times of Travel...\n")
     start_time = time.time()
@@ -118,7 +120,7 @@ def time_stats(df, month, day):
 
 
 def station_stats(df):
-    # Displays statistics on the most popular stations and trip.
+    """Displays statistics on the most popular stations and trip."""
 
     print("\nCalculating The Most Popular Stations and Trip...\n")
     start_time = time.time()
@@ -141,7 +143,7 @@ def station_stats(df):
 
 
 def trip_stats(df):
-    # Displays statistics on the total and average trip duration.
+    """Displays statistics on the total and average trip duration."""
 
     print("\nCalculating Trip Duration...\n")
     start_time = time.time()
@@ -161,7 +163,13 @@ def trip_stats(df):
 
 
 def user_stats(df, city):
-    # Displays statistics on bikeshare users.
+    """Displays statistics on bikeshare users."""
+
+    print("\nCalculating User Stats...\n")
+    start_time = time.time()
+
+    # Display counts of user types
+    print(df["User Type"].value_counts())
 
     print("\nCalculating User Stats...\n")
     start_time = time.time()
@@ -187,6 +195,8 @@ def user_stats(df, city):
 
 
 def display_data(df):
+    """Displays raw data to user 5 rows at a time"""
+
     view_data = input(
         "\nWould you like to view 5 rows of individual trip data? yes or no\n"
     ).lower()
