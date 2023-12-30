@@ -21,7 +21,7 @@ def get_filters():
     while city == "":
         city = input("Select a city filter: Chicago, NYC, or Washington?\n").lower()
         if re.match("chicago|nyc|washington", city):
-            print("We'll provide data for {}\n".format(city.upper()))
+            print("We'll provide data for %s\n" % city.upper())
         else:
             city = ""
             print("Invalid input. Please enter a valid city.\n")
@@ -30,7 +30,7 @@ def get_filters():
     while time_filter == "":
         time_filter = input("Would you like to filter by month, day or none?\n").lower()
         if re.match("month|day", time_filter):
-            print("We will filter by {}.\n".format(time_filter))
+            print("We will filter by %s.\n" % time_filter)
         elif time_filter == "none":
             print("We won't filter the data.\n")
         else:
@@ -101,17 +101,17 @@ def time_stats(df, month, day):
 
     # display the most common month
     if month == "all":
-        top_month = df["Start Time"].dt.month.value_counts().idxmax()
-        print("The most common month is {}\n".format(top_month))
+        top_month = df["Start Time"].dt.month_name().value_counts().idxmax()
+        print("Most Common Month: %s\n" % top_month)
 
     # display the most common day of week
-    if day != "all":
-        top_dow = df["Start Time"].dt.dayofweek.value_counts().idxmax()
-        print("The most common day of week is {}\n".format(top_dow))
+    if day == "all":
+        top_dow = df["Start Time"].dt.day_name().value_counts().idxmax()
+        print("Most Common Day of Week: %s\n" % top_dow)
 
-        # display the most common start hour
-        top_hour = df["Start Time"].dt.hour.value_counts().idxmax()
-        print("The most common start hour is {}\n".format(top_hour))
+    # display the most common start hour
+    top_hour = df["Start Time"].dt.hour.value_counts().idxmax()
+    print("Most Common Start Hour: %s\n" % top_hour)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-" * 40)
@@ -125,16 +125,16 @@ def station_stats(df):
 
     # display most commonly used start station
     s1 = df["Start Station"].value_counts().idxmax()
-    print("Start Station: {}\n".format(s1))
+    print("Start Station: %s\n" % s1)
 
     # display most commonly used end station
     s2 = df["End Station"].value_counts().idxmax()
-    print("End station: {}\n".format(s2))
+    print("End station: %s\n" % s2)
 
     # display most frequent combination of start station and end station trip
     df["Trip"] = df["Start Station"] + " TO " + df["End Station"]
     s3 = df["Trip"].value_counts().idxmax()
-    print("Trip: {}\n".format(s3))
+    print("Trip: %s\n" % s3)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-" * 40)
@@ -149,12 +149,12 @@ def trip_stats(df):
     # display total travel time
     total = df["Trip Duration"].sum()
     total_hours = round(total / (60 * 60))
-    print("Total Travel Time: {} hours".format(total_hours))
+    print("Total Travel Time: %s hours" % total_hours)
 
     # display mean travel time
     average_time = df["Trip Duration"].mean()
     average_time_min = round(average_time / 60)
-    print("Mean Travel Time: {} minutes".format(average_time_min))
+    print("Mean Travel Time: %s minutes" % average_time_min)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-" * 40)
@@ -175,12 +175,12 @@ def user_stats(df, city):
         print(df["Gender"].value_counts())
 
         # Display earliest, most recent, and most common year of birth
-        low_year = int(df["Birth Year"].min())
+        low_year = int(df["Birth Year"].min())  # int removes floating zero
         recent_year = int(df["Birth Year"].max())
         common_year = int(df["Birth Year"].value_counts().idxmax())
-        print("\nEarliest Year: {}\n".format(low_year))
-        print("Most Recent Year: {}\n".format(recent_year))
-        print("Most Common Year: {}\n".format(common_year))
+        print("\nEarliest Year: %s\n" % low_year)
+        print("Most Recent Year: %s\n" % recent_year)
+        print("Most Common Year: %s\n" % common_year)
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print("-" * 40)
